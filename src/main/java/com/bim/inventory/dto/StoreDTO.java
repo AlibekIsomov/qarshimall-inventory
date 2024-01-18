@@ -1,12 +1,13 @@
 package com.bim.inventory.dto;
 
-
-import com.bim.inventory.entity.Payment;
+import com.bim.inventory.entity.Category;
+import com.bim.inventory.entity.RentStore;
+import com.bim.inventory.entity.SaleStore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import javax.persistence.*;
 
 
 @Data
@@ -15,20 +16,17 @@ import java.util.List;
 public class StoreDTO {
     private Long id;
 
-    private int fullAmount;
-
     private int contractNumber;
 
-    private String fullName;
+    private String FullName;
 
     private int storeNumber;
 
-    private int initialPayment;
-
     private double size;
 
-    private double lastPayment;
+    private Long saleStoreId;
 
-    private List<PaymentDTO> payments;
+    private Long rentStoreId;
 
+    private Long categoryId;
 }

@@ -1,7 +1,6 @@
 package com.bim.inventory.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,8 +10,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,25 +21,28 @@ public class Store {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int fullAmount;
-
+    @Column(nullable = false, unique = true)
     private int contractNumber;
 
+    @Column(nullable = false)
     private String FullName;
 
+    @Column(nullable = false, unique = true)
     private int storeNumber;
 
-    @Column(name = "initialPayment")
-    private int initialPayment;
-
+    @Column(nullable = false)
     private double size;
 
-    private double lastPayment;
+    @ManyToOne
+    @JoinColumn(name = "saleStore_id")
+    private SaleStore saleStore;
 
+    @ManyToOne
+    @JoinColumn(name = "rentStore_id")
+    private RentStore rentStore;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL,  fetch = FetchType.EAGER, orphanRemoval = true)
-    private List<Payment> payments = new ArrayList<>();
+    @ManyToOne
+    private Category category;
 
     @CreatedBy
     private String createdBy;

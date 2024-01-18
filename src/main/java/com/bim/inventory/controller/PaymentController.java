@@ -23,8 +23,8 @@ public class PaymentController {
 
 
     @GetMapping("/total/{storeId}")
-    public ResponseEntity<Double> getTotalPaymentsByStore(@PathVariable Long storeId) {
-        double totalPayments = paymentService.calculateTotalPaymentsByStore(storeId);
+    public ResponseEntity<Double> getTotalPaymentsByStore(@PathVariable Long saleStoreId) {
+        double totalPayments = paymentService.calculateTotalPaymentsByStore(saleStoreId);
         return ResponseEntity.ok(totalPayments);
     }
 
@@ -40,23 +40,23 @@ public class PaymentController {
 
     @PostMapping("/{storeId}/add-payment")
     public ResponseEntity<Payment> addPayment(
-            @PathVariable Long storeId,
-            @RequestParam double newPayment) {
-        return paymentService.addPayment(storeId, newPayment);
+            @PathVariable Long saleStoreId,
+            @RequestParam Long newPayment) {
+        return paymentService.addPayment(saleStoreId, newPayment);
     }
 
     @PutMapping("/{storeId}/updatePayment/{paymentId}")
     public ResponseEntity<Payment> updatePayment(
-            @PathVariable Long storeId,
+            @PathVariable Long saleStoreId,
             @PathVariable Long paymentId,
-            @RequestParam double newPayment
+            @RequestParam Long newPayment
     ) {
-        return paymentService.updatePayment(storeId, paymentId, newPayment);
+        return paymentService.updatePayment(saleStoreId, paymentId, newPayment);
     }
 
     @GetMapping("/{storeId}/payments")
-    public ResponseEntity<List<PaymentDTO>> getAllPayments(@PathVariable Long storeId) {
-        return paymentService.getAllPayments(storeId);
+    public ResponseEntity<List<PaymentDTO>> getAllPayments(@PathVariable Long saleStoreId) {
+        return paymentService.getAllPayments(saleStoreId);
     }
 
     @DeleteMapping("/{paymentId}")

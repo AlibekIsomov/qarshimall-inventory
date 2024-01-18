@@ -25,7 +25,7 @@ public class SalaryController {
     @PostMapping("/{workerId}/add-payment")
     public ResponseEntity<Salary> addPayment(
             @PathVariable Long storeId,
-            @RequestParam double newPayment) {
+            @RequestParam Long newPayment) {
         return salaryService.addSalary(storeId, newPayment);
     }
 
@@ -33,7 +33,7 @@ public class SalaryController {
     public ResponseEntity<Salary> updatePayment(
             @PathVariable Long workerId,
             @PathVariable Long salaryId,
-            @RequestParam double newSalary
+            @RequestParam Long newSalary
     ) {
         return salaryService.updateSalary(workerId, salaryId, newSalary);
     }

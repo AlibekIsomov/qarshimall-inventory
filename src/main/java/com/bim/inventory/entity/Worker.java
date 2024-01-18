@@ -20,6 +20,7 @@ import java.util.List;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Worker {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

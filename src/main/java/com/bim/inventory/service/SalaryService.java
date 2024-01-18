@@ -12,9 +12,9 @@ import java.util.List;
 public interface SalaryService {
 
 
-     ResponseEntity<Salary> addSalary(Long workerId, double newSalary);
+     ResponseEntity<Salary> addSalary(Long workerId, Long newSalary);
 
-    ResponseEntity<Salary> updateSalary(Long workerId, Long salaryId, double newSalary);
+    ResponseEntity<Salary> updateSalary(Long workerId, Long salaryId, Long newSalary);
 
     void deleteSalary(Long salaryId);
 

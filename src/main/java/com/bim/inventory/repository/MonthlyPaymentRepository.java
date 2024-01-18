@@ -1,10 +1,10 @@
 package com.bim.inventory.repository;
 
-import com.bim.inventory.entity.Store;
+import com.bim.inventory.entity.MonthlyPayment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface StoreRepository extends JpaRepository<Store, Long> {
+public interface MonthlyPaymentRepository extends JpaRepository<MonthlyPayment , Long> {
 }

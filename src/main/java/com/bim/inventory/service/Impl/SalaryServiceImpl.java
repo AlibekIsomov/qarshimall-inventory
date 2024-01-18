@@ -26,7 +26,7 @@ public class SalaryServiceImpl implements SalaryService {
     SalaryRepository salaryRepository;
 
     @Override
-    public ResponseEntity<Salary> addSalary(Long workerId, double newSalary) {
+    public ResponseEntity<Salary> addSalary(Long workerId, Long newSalary) {
 
         Optional<Worker> salaryOptional = workerRepository.findById(workerId);
 
@@ -55,7 +55,7 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     @Override
-    public ResponseEntity<Salary> updateSalary(Long workerId, Long salaryId, double newSalary) {
+    public ResponseEntity<Salary> updateSalary(Long workerId, Long salaryId, Long newSalary) {
         Optional<Worker> workerOptional = workerRepository.findById(workerId);
 
         if (workerOptional.isPresent()) {
