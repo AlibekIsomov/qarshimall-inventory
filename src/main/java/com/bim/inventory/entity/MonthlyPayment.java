@@ -35,6 +35,9 @@ public class MonthlyPayment {
     @JoinColumn(name = "rent_store_id")
     private RentStore rentStore;
 
+    
+    private PaymentStatus status;
+
     @CreatedBy
     private String createdBy;
 

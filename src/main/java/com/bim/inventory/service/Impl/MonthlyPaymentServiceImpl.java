@@ -33,12 +33,14 @@ public class MonthlyPaymentServiceImpl implements MonthlyPaymentService {
         if (!storeOptional.isPresent()) {
             logger.info("Such ID category does not exist!");
         }
+        PaymentStatus paymentStatus = PaymentStatus.valueOf(data.getStatus());
 
         MonthlyPayment monthlyPayment = new MonthlyPayment();
         monthlyPayment.setPaymentAmount(data.getPaymentAmount());
         monthlyPayment.setToDate(data.getToDate());
         monthlyPayment.setFromDate(data.getFromDate());
         monthlyPayment.setRentStore(storeOptional.get());
+        monthlyPayment.setStatus(paymentStatus);
 
         return Optional.of(monthlyPaymentRepository.save(monthlyPayment));
     }
@@ -52,9 +54,11 @@ public class MonthlyPaymentServiceImpl implements MonthlyPaymentService {
         if (!optionalMonthlyPayment.isPresent()) {
             logger.info("Such ID category does not exist!");
         }
+        PaymentStatus paymentStatus = PaymentStatus.valueOf(data.getStatus());
 
         MonthlyPayment monthlyPayment = optionalMonthlyPayment.get();
 
+        monthlyPayment.setStatus(paymentStatus);
         monthlyPayment.setPaidAmount(data.getPaidAmount());
 
 

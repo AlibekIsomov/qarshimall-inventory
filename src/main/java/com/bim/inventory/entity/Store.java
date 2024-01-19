@@ -33,6 +33,9 @@ public class Store {
     @Column(nullable = false)
     private double size;
 
+    @OneToOne
+    private FileEntity fileEntity;
+
     @ManyToOne
     @JoinColumn(name = "categoryStore_id", nullable = false)
     private CategoryStore categoryStore;

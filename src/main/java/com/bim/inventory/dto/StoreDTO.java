@@ -25,4 +25,6 @@ public class StoreDTO {
     private double size;
 
     private Long categoryStoreId;
+
+    private Long FileEntityId;
 }

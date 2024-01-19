@@ -24,5 +24,7 @@ public class MonthlyPaymentDTO {
 
     private Date fromDate;
 
+    private String status;
+
     private Long rentStoreId;
 }

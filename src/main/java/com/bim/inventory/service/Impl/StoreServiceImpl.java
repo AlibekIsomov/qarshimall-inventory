@@ -2,11 +2,9 @@ package com.bim.inventory.service.Impl;
 
 import com.bim.inventory.dto.StoreDTO;
 import com.bim.inventory.entity.CategoryStore;
+import com.bim.inventory.entity.FileEntity;
 import com.bim.inventory.entity.Store;
-import com.bim.inventory.repository.CategoryStoreRepository;
-import com.bim.inventory.repository.RentStoreRepository;
-import com.bim.inventory.repository.SaleStoreRepository;
-import com.bim.inventory.repository.StoreRepository;
+import com.bim.inventory.repository.*;
 import com.bim.inventory.service.StoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +31,9 @@ public class StoreServiceImpl implements StoreService {
 
     @Autowired
     CategoryStoreRepository categoryStoreRepository;
+
+    @Autowired
+    FileRepository fileRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(StoreServiceImpl.class);
 
@@ -61,12 +62,18 @@ public class StoreServiceImpl implements StoreService {
             logger.info("Such ID category does not exist!");
         }
 
+        Optional<FileEntity> optionalFileEntity = fileRepository.findById(data.getFileEntityId());
+        if (!optionalFileEntity.isPresent()) {
+            logger.info("Such ID category does not exist!");
+        }
+
         Store store = new Store();
         store.setFullName(data.getFullName());
         store.setContractNumber(data.getContractNumber());
         store.setSize(data.getSize());
         store.setStoreNumber(data.getStoreNumber());
         store.setCategoryStore(optionalCategory.get());
+        store.setFileEntity(optionalFileEntity.get());
 
         return Optional.of(storeRepository.save(store));
     }
@@ -87,6 +94,11 @@ public class StoreServiceImpl implements StoreService {
             return Optional.empty();
         }
 
+        Optional<FileEntity> optionalFileEntity = fileRepository.findById(data.getFileEntityId());
+        if (!optionalFileEntity.isPresent()) {
+            logger.info("Such ID category does not exist!");
+        }
+
 
         Store storeToUpdate = existingStore.get();
 
@@ -95,6 +107,7 @@ public class StoreServiceImpl implements StoreService {
         storeToUpdate.setSize(data.getSize());
         storeToUpdate.setStoreNumber(data.getStoreNumber());
         storeToUpdate.setCategoryStore(optionalCategory.get());
+        storeToUpdate.setFileEntity(optionalFileEntity.get());
 
 
         return Optional.of(storeRepository.save(storeToUpdate));
