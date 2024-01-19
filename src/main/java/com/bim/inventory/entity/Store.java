@@ -34,15 +34,8 @@ public class Store {
     private double size;
 
     @ManyToOne
-    @JoinColumn(name = "saleStore_id")
-    private SaleStore saleStore;
-
-    @ManyToOne
-    @JoinColumn(name = "rentStore_id")
-    private RentStore rentStore;
-
-    @ManyToOne
-    private Category category;
+    @JoinColumn(name = "categoryStore_id", nullable = false)
+    private CategoryStore categoryStore;
 
     @CreatedBy
     private String createdBy;

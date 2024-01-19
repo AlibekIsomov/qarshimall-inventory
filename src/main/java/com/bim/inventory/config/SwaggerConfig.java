@@ -2,6 +2,8 @@ package com.bim.inventory.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -11,38 +13,37 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+
 import java.util.Collections;
 
 
 @Configuration
-@EnableSwagger2
-public class SwaggerConfig {
+@EnableWebMvc
+public class SwaggerConfig implements WebMvcConfigurer {
+
     @Bean
     public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
+        return new Docket(DocumentationType.SWAGGER_2).select()
                 .apis(RequestHandlerSelectors.basePackage("com.bim.inventory"))
-                .paths(PathSelectors.any())
-                .build().apiInfo(metaData())
-                .securityContexts(Collections.emptyList()) // Disable security context
-                .securitySchemes(Collections.emptyList()); // Disable security schemes
-
+                .paths(PathSelectors.regex("/.*"))
+                .build().apiInfo(apiInfoMetaData());
     }
 
-    private ApiInfo metaData() {
-        return new ApiInfoBuilder()
-                .title("Spring Boot Swagger Configuration")
-                .description("\"Swagger configuration for application \"")
-                .version("1.1.0")
+    private ApiInfo apiInfoMetaData() {
+
+        return new ApiInfoBuilder().title("NAME OF SERVICE")
+                .description("API Endpoint Decoration")
+                .contact(new Contact("Dev-Team", "https://www.dev-team.com/", "dev-team@gmail.com"))
                 .license("Apache 2.0")
-                .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")
-                .contact(new Contact("Isomov Alibek", "t.me/IA_developer", "aisomov.dev@gmail.com"))
+                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
+                .version("1.0.0")
                 .build();
     }
+}
 
     //for Swagger api doc generation
-    //http://localhost:8084/v2/api-docs
+    //http://localhost:8086/v2/api-docs
 
-//    http://localhost:8084/swagger-ui.html
-}
+//    http://localhost:8086/swagger-ui.html
+
 

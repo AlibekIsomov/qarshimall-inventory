@@ -28,6 +28,8 @@ public class SaleStoreDTO {
 
     private double lastPayment;
 
+    private Long StoreId;
+
     private List<PaymentDTO> payments;
 
 }

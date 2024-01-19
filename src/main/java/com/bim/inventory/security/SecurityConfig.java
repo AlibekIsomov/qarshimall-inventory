@@ -84,8 +84,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/api/fayl/upload").hasAnyAuthority("ADMIN","MANAGER")
 //
 //
-//                .antMatchers("/swagger-ui/**").permitAll()
-//                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/swagger-ui/**").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/swagger-ui/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/swagger-resources/**").permitAll()
 //
 //                .antMatchers("/api/user").hasAnyAuthority("ADMIN")
 //                .antMatchers("/api/user/{id}").hasAnyAuthority("ADMIN")

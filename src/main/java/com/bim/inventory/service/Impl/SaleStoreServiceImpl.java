@@ -4,8 +4,10 @@ package com.bim.inventory.service.Impl;
 import com.bim.inventory.dto.SaleStoreDTO;
 import com.bim.inventory.entity.Payment;
 import com.bim.inventory.entity.SaleStore;
+import com.bim.inventory.entity.Store;
 import com.bim.inventory.repository.PaymentRepository;
 import com.bim.inventory.repository.SaleStoreRepository;
+import com.bim.inventory.repository.StoreRepository;
 import com.bim.inventory.service.SaleStoreService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,16 +26,19 @@ public class SaleStoreServiceImpl implements SaleStoreService {
     private static final Logger logger = LoggerFactory.getLogger(SaleStoreServiceImpl.class);
 
     @Autowired
-    SaleStoreRepository storeRepository;
+    SaleStoreRepository saleStoreRepository;
 
     @Autowired
     PaymentRepository paymentRepository;
+
+    @Autowired
+    StoreRepository storeRepository;
 
 
 
     @Override
     public Page<SaleStore> getAll(Pageable pageable) throws Exception {
-        return storeRepository.findAll(pageable);
+        return saleStoreRepository.findAll(pageable);
     }
 
     @Override
@@ -42,23 +47,38 @@ public class SaleStoreServiceImpl implements SaleStoreService {
             logger.info("Input with id " + id + " does not exists");
             return Optional.empty();
         }
-        return storeRepository.findById(id);
+        return saleStoreRepository.findById(id);
     }
 
 
     @Override
     public Optional<SaleStore> create(SaleStoreDTO data) throws Exception {
 
+        Optional<Store> optionalStore = storeRepository.findById(data.getStoreId());
+
+        if (!optionalStore.isPresent()) {
+            logger.info("Such ID category does not exist!");
+        }
+
+
         SaleStore saleStore = new SaleStore();
         saleStore.setFullAmount(data.getFullAmount());
         saleStore.setInitialPayment(data.getInitialPayment());
+        saleStore.setStore(optionalStore.get());
 
-        return Optional.of(storeRepository.save(saleStore));
+        return Optional.of(saleStoreRepository.save(saleStore));
     }
 
     @Override
     public Optional<SaleStore> update(Long id, SaleStoreDTO data) throws Exception {
-        Optional<SaleStore> existingStore = storeRepository.findById(id);
+        Optional<SaleStore> existingStore = saleStoreRepository.findById(id);
+
+        Optional<Store> optionalStore = storeRepository.findById(data.getStoreId());
+
+
+        if (!optionalStore.isPresent()) {
+            logger.info("Such ID category does not exist!");
+        }
 
         if (!existingStore.isPresent()) {
             logger.info("Store with id " + id + " does not exist");
@@ -70,9 +90,10 @@ public class SaleStoreServiceImpl implements SaleStoreService {
 
         saleStoreToUpdate.setFullAmount(data.getFullAmount());
         saleStoreToUpdate.setInitialPayment(data.getInitialPayment());
+        saleStoreToUpdate.setStore(optionalStore.get());
 
 
-        return Optional.of(storeRepository.save(saleStoreToUpdate));
+        return Optional.of(saleStoreRepository.save(saleStoreToUpdate));
     }
 
     @Override
@@ -92,7 +113,7 @@ public class SaleStoreServiceImpl implements SaleStoreService {
 
     @Override
     public List<SaleStore> findItemsWithinDateRange(Instant startDate, Instant endDate) {
-        return storeRepository.findByCreatedAtBetween(startDate, endDate);
+        return saleStoreRepository.findByCreatedAtBetween(startDate, endDate);
 
     }
 

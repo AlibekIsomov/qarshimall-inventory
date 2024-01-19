@@ -24,9 +24,5 @@ public class StoreDTO {
 
     private double size;
 
-    private Long saleStoreId;
-
-    private Long rentStoreId;
-
-    private Long categoryId;
+    private Long categoryStoreId;
 }

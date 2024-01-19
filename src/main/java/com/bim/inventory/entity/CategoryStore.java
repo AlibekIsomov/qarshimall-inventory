@@ -1,6 +1,5 @@
 package com.bim.inventory.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,30 +9,21 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.Date;
-import java.util.UUID;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class MonthlyPayment {
+public class CategoryStore {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
-    private Long paymentAmount;
-
-    private Long paidAmount;
-
-    private Date toDate;
-
-    private Date fromDate;
-
-    @ManyToOne
-    @JoinColumn(name = "rent_store_id")
-    private RentStore rentStore;
+    @Column(nullable = false, unique = true)
+    private String name;
 
     @CreatedBy
     private String createdBy;

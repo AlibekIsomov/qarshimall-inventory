@@ -34,6 +34,11 @@ public class SaleStore {
     private double lastPayment;
 
 
+    @ManyToOne
+    @JoinColumn(name = "store_id")
+    private Store store;
+
+
     @JsonIgnore
     @OneToMany(mappedBy = "saleStore", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Payment> payments = new ArrayList<>();

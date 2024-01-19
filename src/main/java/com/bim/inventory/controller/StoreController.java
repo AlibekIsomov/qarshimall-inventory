@@ -1,9 +1,10 @@
 package com.bim.inventory.controller;
 
-import com.bim.inventory.dto.SaleStoreDTO;
-import com.bim.inventory.entity.SaleStore;
-import com.bim.inventory.repository.SaleStoreRepository;
-import com.bim.inventory.service.SaleStoreService;
+
+import com.bim.inventory.dto.StoreDTO;
+import com.bim.inventory.entity.Store;
+import com.bim.inventory.repository.StoreRepository;
+import com.bim.inventory.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,33 +17,33 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/saleStore")
-public class SaleStoreController {
+@RequestMapping("/api/store")
+public class StoreController {
 
     @Autowired
-    SaleStoreService saleStoreService;
+    StoreService storeService;
     @Autowired
-    SaleStoreRepository storeRepository;
+    StoreRepository storeRepository;
 
     @Transactional
     @GetMapping
-    public ResponseEntity<Page<SaleStore>> getAll(Pageable pageable) throws Exception {
-        return ResponseEntity.ok(saleStoreService.getAll(pageable));
+    public ResponseEntity<Page<Store>> getAll(Pageable pageable) throws Exception {
+        return ResponseEntity.ok(storeService.getAll(pageable));
     }
 
     @Transactional
     @GetMapping("/{id}")
-    public ResponseEntity<SaleStore> getById(@PathVariable Long id) throws Exception {
-        return saleStoreService.getById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Store> getById(@PathVariable Long id) throws Exception {
+        return storeService.getById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<SaleStore> create(@RequestBody SaleStoreDTO data) throws Exception {
+    public ResponseEntity<Store> create(@RequestBody StoreDTO data) throws Exception {
         try {
-            Optional<SaleStore> createdSaleStore = saleStoreService.create(data);
+            Optional<Store> createStore = storeService.create(data);
 
-            if (createdSaleStore.isPresent()) {
-                return ResponseEntity.ok(createdSaleStore.get());
+            if (createStore.isPresent()) {
+                return ResponseEntity.ok(createStore.get());
             } else {
                 return ResponseEntity.notFound().build();
             }
@@ -52,9 +53,9 @@ public class SaleStoreController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SaleStore> update(@PathVariable Long id, @RequestBody SaleStoreDTO data) {
+    public ResponseEntity<Store> update(@PathVariable Long id, @RequestBody StoreDTO data) {
         try {
-            Optional<SaleStore> updatedStore = saleStoreService.update(id, data);
+            Optional<Store> updatedStore = storeService.update(id, data);
 
             if (updatedStore.isPresent()) {
                 return ResponseEntity.ok(updatedStore.get());
@@ -70,8 +71,6 @@ public class SaleStoreController {
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
-        saleStoreService.deleteById(id);
+        storeService.deleteById(id);
     }
-
-
 }
