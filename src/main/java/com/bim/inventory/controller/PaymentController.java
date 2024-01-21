@@ -22,7 +22,7 @@ public class PaymentController {
     PaymentRepository paymentRepository;
 
 
-    @GetMapping("/total/{storeId}")
+    @GetMapping("/total/{saleStoreId}")
     public ResponseEntity<Double> getTotalPaymentsByStore(@PathVariable Long saleStoreId) {
         double totalPayments = paymentService.calculateTotalPaymentsByStore(saleStoreId);
         return ResponseEntity.ok(totalPayments);
@@ -38,7 +38,7 @@ public class PaymentController {
 //    }
 
 
-    @PostMapping("/{storeId}/add-payment")
+    @PostMapping("/{saleStoreId}/add-payment")
     public ResponseEntity<Payment> addPayment(
             @PathVariable Long saleStoreId,
             @RequestParam Long newPayment) {
@@ -54,7 +54,7 @@ public class PaymentController {
         return paymentService.updatePayment(saleStoreId, paymentId, newPayment);
     }
 
-    @GetMapping("/{storeId}/payments")
+    @GetMapping("/{saleStoreId}/payments")
     public ResponseEntity<List<PaymentDTO>> getAllPayments(@PathVariable Long saleStoreId) {
         return paymentService.getAllPayments(saleStoreId);
     }
