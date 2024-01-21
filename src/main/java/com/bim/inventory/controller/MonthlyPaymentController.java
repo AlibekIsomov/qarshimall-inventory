@@ -2,6 +2,7 @@ package com.bim.inventory.controller;
 
 
 import com.bim.inventory.dto.MonthlyPaymentDTO;
+import com.bim.inventory.dto.PaymentDTO;
 import com.bim.inventory.dto.RentStoreDTO;
 import com.bim.inventory.entity.MonthlyPayment;
 import com.bim.inventory.entity.RentStore;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -55,6 +57,23 @@ public class MonthlyPaymentController {
             return ResponseEntity.badRequest().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+
+    @GetMapping("/{rentStoreId}/payments")
+    public ResponseEntity<List<MonthlyPaymentDTO>> getAllPayments(@PathVariable Long rentStoreId) {
+        return monthlyPaymentService.getAllPayments(rentStoreId);
+    }
+
+    @DeleteMapping("/{paymentId}")
+    public ResponseEntity<String> deletePayment(@PathVariable Long paymentId) {
+        try {
+            monthlyPaymentService.deletePayment(paymentId);
+            return new ResponseEntity<>("Payment deleted successfully", HttpStatus.OK);
+        } catch (Exception e) {
+            // Handle exceptions appropriately (e.g., log the error)
+            return new ResponseEntity<>("Failed to delete payment: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

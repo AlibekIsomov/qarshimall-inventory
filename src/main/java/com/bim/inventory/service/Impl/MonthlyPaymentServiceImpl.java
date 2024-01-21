@@ -9,9 +9,12 @@ import com.bim.inventory.service.MonthlyPaymentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MonthlyPaymentServiceImpl implements MonthlyPaymentService {
@@ -78,46 +81,46 @@ public class MonthlyPaymentServiceImpl implements MonthlyPaymentService {
 //
 //
 //
-//    @Override
-//    public void deletePayment(Long paymentId) {
-//        Optional<Payment> paymentOptional = paymentRepository.findById(paymentId);
-//
-//        if (paymentOptional.isPresent()) {
-//            Payment paymentToDelete = paymentOptional.get();
-//
-//            // Remove the payment from the associated store's payments list
-//            SaleStore saleStore = paymentToDelete.getSaleStore();
-//            if (saleStore != null) {
-//                saleStore.getPayments().remove(paymentToDelete);
-//            }
-//
-//            // Delete the payment from the database
-//            paymentRepository.delete(paymentToDelete);
-//        } else {
-//            // Handle the case where the payment with the given id is not found
-//            // You can throw an exception, log a message, or handle it in another way.
-//            // For simplicity, I'll log a message.
-//            System.out.println("Payment with id " + paymentId + " not found");
-//        }
-//    }
-//
-//    @Override
-//    public ResponseEntity<List<PaymentDTO>> getAllPayments (Long saleStoreId){
-//        Optional<SaleStore> storeOptional = storeRepository.findById(saleStoreId);
-//
-//        if (storeOptional.isPresent()) {
-//            SaleStore saleStore = storeOptional.get();
-//
-//            List<PaymentDTO> paymentDTOs = saleStore.getPayments()
-//                    .stream()
-//                    .map(this::convertToPaymentDTO)
-//                    .collect(Collectors.toList());
-//
-//            return ResponseEntity.ok(paymentDTOs);
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
+    @Override
+    public void deletePayment(Long monthlyPaymentId) {
+        Optional<MonthlyPayment> paymentOptional = monthlyPaymentRepository.findById(monthlyPaymentId);
+
+        if (paymentOptional.isPresent()) {
+            MonthlyPayment paymentToDelete = paymentOptional.get();
+
+            // Remove the payment from the associated store's payments list
+            RentStore rentStore = paymentToDelete.getRentStore();
+            if (rentStore != null) {
+                rentStore.getMonthlyPayments().remove(paymentToDelete);
+            }
+
+            // Delete the payment from the database
+            monthlyPaymentRepository.delete(paymentToDelete);
+        } else {
+            // Handle the case where the payment with the given id is not found
+            // You can throw an exception, log a message, or handle it in another way.
+            // For simplicity, I'll log a message.
+            System.out.println("Payment with id " + monthlyPaymentId + " not found");
+        }
+    }
+
+    @Override
+    public ResponseEntity<List<MonthlyPaymentDTO>> getAllPayments(Long rentStoreId){
+        Optional<RentStore> storeOptional = rentStoreRepository.findById(rentStoreId);
+
+        if (storeOptional.isPresent()) {
+            RentStore rentStore = storeOptional.get();
+
+            List<MonthlyPaymentDTO> paymentDTOs = rentStore.getMonthlyPayments()
+                    .stream()
+                    .map(this::convertToPaymentDTO)
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.ok(paymentDTOs);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 //    @Override
 //    public SaleStoreDTO convertToDTO(SaleStore saleStore) {
 //        SaleStoreDTO saleStoreDTO = new SaleStoreDTO();
@@ -134,12 +137,14 @@ public class MonthlyPaymentServiceImpl implements MonthlyPaymentService {
 //    }
 //
 //
-//    private PaymentDTO convertToPaymentDTO(Payment payments) {
-//        PaymentDTO paymentDTO = new PaymentDTO();
-//        paymentDTO.setId(payments.getId());
-//        paymentDTO.setNewPayment(payments.getNewPayment());
-//        paymentDTO.setCreatedAt(payments.getCreatedAt());
-//        return paymentDTO;
-//
-//    }
+    private MonthlyPaymentDTO convertToPaymentDTO(MonthlyPayment payments) {
+        MonthlyPaymentDTO paymentDTO = new MonthlyPaymentDTO();
+        paymentDTO.setId(payments.getId());
+        paymentDTO.setPaymentAmount(payments.getPaymentAmount());
+        paymentDTO.setToDate(payments.getToDate());
+        paymentDTO.setFromDate(payments.getFromDate());
+        paymentDTO.setStatus(String.valueOf(payments.getStatus()));
+        return paymentDTO;
+
+    }
 }
