@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.Date;
 
 @Data
@@ -27,4 +28,6 @@ public class MonthlyPaymentDTO {
     private String status;
 
     private Long rentStoreId;
+
+    private Instant createdAt;
 }

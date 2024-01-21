@@ -61,8 +61,8 @@ public class MonthlyPaymentController {
     }
 
 
-    @GetMapping("/{rentStoreId}/payments")
-    public ResponseEntity<List<MonthlyPaymentDTO>> getAllPayments(@PathVariable Long rentStoreId) {
+    @GetMapping("/all/{rentStoreId}")
+    public ResponseEntity<List<MonthlyPayment>> getAllPayments(@PathVariable Long rentStoreId) {
         return monthlyPaymentService.getAllPayments(rentStoreId);
     }
 

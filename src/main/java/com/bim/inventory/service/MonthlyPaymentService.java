@@ -27,5 +27,5 @@ public interface MonthlyPaymentService {
     //
     void deletePayment(Long paymentId);
 
-    ResponseEntity<List<MonthlyPaymentDTO>> getAllPayments(Long rentStoreId);
+    ResponseEntity<List<MonthlyPayment>> getAllPayments(Long rentStoreId);
 }

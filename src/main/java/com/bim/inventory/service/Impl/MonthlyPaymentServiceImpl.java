@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class MonthlyPaymentServiceImpl implements MonthlyPaymentService {
@@ -43,6 +42,7 @@ public class MonthlyPaymentServiceImpl implements MonthlyPaymentService {
         monthlyPayment.setToDate(data.getToDate());
         monthlyPayment.setFromDate(data.getFromDate());
         monthlyPayment.setRentStore(storeOptional.get());
+        monthlyPayment.setPaidAmount(data.getPaidAmount());
         monthlyPayment.setStatus(paymentStatus);
 
         return Optional.of(monthlyPaymentRepository.save(monthlyPayment));
@@ -61,6 +61,7 @@ public class MonthlyPaymentServiceImpl implements MonthlyPaymentService {
 
         MonthlyPayment monthlyPayment = optionalMonthlyPayment.get();
 
+        monthlyPayment.setPaymentAmount(data.getPaymentAmount());
         monthlyPayment.setStatus(paymentStatus);
         monthlyPayment.setPaidAmount(data.getPaidAmount());
 
@@ -105,38 +106,13 @@ public class MonthlyPaymentServiceImpl implements MonthlyPaymentService {
     }
 
     @Override
-    public ResponseEntity<List<MonthlyPaymentDTO>> getAllPayments(Long rentStoreId){
-        Optional<RentStore> storeOptional = rentStoreRepository.findById(rentStoreId);
+    public ResponseEntity<List<MonthlyPayment>> getAllPayments(Long rentStoreId) {
+        List<MonthlyPayment> monthlyPayments = monthlyPaymentRepository.findByRentStoreId(rentStoreId);
 
-        if (storeOptional.isPresent()) {
-            RentStore rentStore = storeOptional.get();
-
-            List<MonthlyPaymentDTO> paymentDTOs = rentStore.getMonthlyPayments()
-                    .stream()
-                    .map(this::convertToPaymentDTO)
-                    .collect(Collectors.toList());
-
-            return ResponseEntity.ok(paymentDTOs);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(monthlyPayments);
     }
-//    @Override
-//    public SaleStoreDTO convertToDTO(SaleStore saleStore) {
-//        SaleStoreDTO saleStoreDTO = new SaleStoreDTO();
-//        saleStoreDTO.setId(saleStore.getId());
-//        saleStoreDTO.setFullAmount(saleStore.getFullAmount());
-//
-//        List<PaymentDTO> paymentDTOs = saleStore.getPayments()
-//                .stream()
-//                .map(this::convertToPaymentDTO)
-//                .collect(Collectors.toList());
-//        saleStoreDTO.setPayments(paymentDTOs);
-//
-//        return saleStoreDTO;
-//    }
-//
-//
+
+
     private MonthlyPaymentDTO convertToPaymentDTO(MonthlyPayment payments) {
         MonthlyPaymentDTO paymentDTO = new MonthlyPaymentDTO();
         paymentDTO.setId(payments.getId());
@@ -144,6 +120,7 @@ public class MonthlyPaymentServiceImpl implements MonthlyPaymentService {
         paymentDTO.setToDate(payments.getToDate());
         paymentDTO.setFromDate(payments.getFromDate());
         paymentDTO.setStatus(String.valueOf(payments.getStatus()));
+        paymentDTO.setCreatedAt(payments.getCreatedAt());
         return paymentDTO;
 
     }
