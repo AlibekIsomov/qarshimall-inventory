@@ -62,10 +62,6 @@ public class StoreServiceImpl implements StoreService {
             logger.info("Such ID category does not exist!");
         }
 
-        Optional<FileEntity> optionalFileEntity = fileRepository.findById(data.getFileEntityId());
-        if (!optionalFileEntity.isPresent()) {
-            logger.info("Such ID category does not exist!");
-        }
 
         Store store = new Store();
         store.setFullName(data.getFullName());
@@ -73,7 +69,6 @@ public class StoreServiceImpl implements StoreService {
         store.setSize(data.getSize());
         store.setStoreNumber(data.getStoreNumber());
         store.setCategoryStore(optionalCategory.get());
-        store.setFileEntity(optionalFileEntity.get());
 
         return Optional.of(storeRepository.save(store));
     }
@@ -106,7 +101,7 @@ public class StoreServiceImpl implements StoreService {
 
         // Retrieve the new FileEntity
         Optional<FileEntity> newFileEntityOptional = fileRepository.findById(data.getFileEntityId());
-        if (!newFileEntityOptional.isPresent()) {
+        if (data.getFileEntityId() == null ||!newFileEntityOptional.isPresent()) {
             logger.info("FileEntity with id " + data.getFileEntityId() + " does not exist");
             return Optional.empty();
         }
