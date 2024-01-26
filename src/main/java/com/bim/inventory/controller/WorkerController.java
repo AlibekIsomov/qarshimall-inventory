@@ -2,6 +2,7 @@ package com.bim.inventory.controller;
 
 import com.bim.inventory.dto.WorkerDTO;
 import com.bim.inventory.entity.Salary;
+import com.bim.inventory.entity.Store;
 import com.bim.inventory.entity.Worker;
 import com.bim.inventory.repository.WorkerRepository;
 import com.bim.inventory.service.WorkerService;
@@ -25,9 +26,8 @@ public class WorkerController{
     WorkerRepository workerRepository;
 
     @GetMapping("/{id}")
-    public ResponseEntity<WorkerDTO> getbyid(@PathVariable Long id) {
-        WorkerDTO workerHistory = workerService.getbyid(id);
-        return ResponseEntity.ok(workerHistory);
+    public ResponseEntity<Worker> getById(@PathVariable Long id) throws Exception {
+        return workerService.getById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 

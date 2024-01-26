@@ -91,30 +91,35 @@ public class StoreServiceImpl implements StoreService {
 
         Store storeToUpdate = existingStore.get();
 
-        // Retrieve the old FileEntity
-        FileEntity oldFileEntity = storeToUpdate.getFileEntity();
+        if(data.getFileEntityId() != null) {
+            storeToUpdate.setFileEntity(null);
+            storeRepository.save(storeToUpdate);
+            // Retrieve the old FileEntity
+            FileEntity oldFileEntity = storeToUpdate.getFileEntity();
 
-        // If there is an old FileEntity, delete it
-        if (oldFileEntity != null) {
-            fileRepository.delete(oldFileEntity);
+            // If there is an old FileEntity, delete it
+            if (oldFileEntity != null) {
+                fileRepository.delete(oldFileEntity);
+            }
+
+            // Retrieve the new FileEntity
+            Optional<FileEntity> newFileEntityOptional = fileRepository.findById(data.getFileEntityId());
+            if (data.getFileEntityId() == null || !newFileEntityOptional.isPresent()) {
+                logger.info("FileEntity with id " + data.getFileEntityId() + " does not exist");
+                return Optional.empty();
+            }
+
+            FileEntity newFileEntity = newFileEntityOptional.get();
+            storeToUpdate.setFileEntity(newFileEntity);
+
         }
-
-        // Retrieve the new FileEntity
-        Optional<FileEntity> newFileEntityOptional = fileRepository.findById(data.getFileEntityId());
-        if (data.getFileEntityId() == null ||!newFileEntityOptional.isPresent()) {
-            logger.info("FileEntity with id " + data.getFileEntityId() + " does not exist");
-            return Optional.empty();
-        }
-
-        FileEntity newFileEntity = newFileEntityOptional.get();
-
         // Update the Store entity with the new data
         storeToUpdate.setFullName(data.getFullName());
         storeToUpdate.setContractNumber(data.getContractNumber());
         storeToUpdate.setSize(data.getSize());
         storeToUpdate.setStoreNumber(data.getStoreNumber());
         storeToUpdate.setCategoryStore(optionalCategory.get());
-        storeToUpdate.setFileEntity(newFileEntity);
+
 
         return Optional.of(storeRepository.save(storeToUpdate));
     }

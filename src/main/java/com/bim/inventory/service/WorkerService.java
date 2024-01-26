@@ -14,7 +14,4 @@ public interface WorkerService extends CommonService<Worker,Long>{
 
     Page<Worker> getAllByNameAndSurnameContains(String name, String Surname, Pageable pageable);
 
-    WorkerDTO getbyid(Long workerId);
-
-    WorkerDTO convertToDTO(Worker worker);
 }

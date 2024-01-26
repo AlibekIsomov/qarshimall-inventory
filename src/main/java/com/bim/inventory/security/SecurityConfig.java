@@ -80,7 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //
 //                .antMatchers("/api/fayl").hasAnyAuthority("ADMIN","MANAGER")
 //                .antMatchers("/api/fayl/{id}").hasAnyAuthority("ADMIN","MANAGER")
-//                .antMatchers("/api/fayl/download/{id}").hasAnyAuthority("ADMIN","MANAGER")
+                .antMatchers("/api/fayl/download/{id}").permitAll()
 //                .antMatchers("/api/fayl/upload").hasAnyAuthority("ADMIN","MANAGER")
 //
 //
@@ -140,6 +140,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         config.addAllowedOrigin("http://localhost:5501");
         config.addAllowedOrigin("http://localhost:5502");
         config.addAllowedOrigin("http://localhost:5173");
+        config.addAllowedOrigin("http://127.0.0.1:5500");
         config.addAllowedOrigin("http://192.168.43.144:4200");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");

@@ -1,49 +1,44 @@
 package com.bim.inventory.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class SaleStore {
-
+public class MonthlySalary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long Id;
 
-    @Column(nullable = false)
-    private int fullAmount;
+    private LocalDate month;
 
-    @Column(name = "initialPayment")
-    private int initialPayment;
+    private PaymentStatus status;
 
-    private double lastPayment;
+    private Long paymentAmount;
 
+    private Long paidAmount;
 
     @ManyToOne
     @JoinColumn(name = "store_id")
-    private Store store;
+    private Worker worker;
 
-
-    @OneToMany(mappedBy = "saleStore", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<Payment> payments = new ArrayList<>();
-
-    @CreatedBy
-    private String createdBy;
+    @OneToMany(mappedBy = "monthlySalary", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<MonthlySalaryPayment> monthlySalaryPayments = new ArrayList<>();
 
     @CreatedDate
     private Instant createdAt;

@@ -17,7 +17,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/store     ")
+@RequestMapping("/api/store")
 public class StoreController {
 
     @Autowired

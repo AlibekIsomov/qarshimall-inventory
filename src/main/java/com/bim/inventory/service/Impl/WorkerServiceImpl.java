@@ -2,11 +2,16 @@ package com.bim.inventory.service.Impl;
 
 import com.bim.inventory.dto.SalaryDTO;
 import com.bim.inventory.dto.WorkerDTO;
+import com.bim.inventory.entity.MonthlySalaryPayment;
+import com.bim.inventory.entity.RentStore;
 import com.bim.inventory.entity.Salary;
 import com.bim.inventory.entity.Worker;
+import com.bim.inventory.repository.MonthlySalaryPaymentRepository;
+import com.bim.inventory.repository.MonthlySalaryRepository;
 import com.bim.inventory.repository.WorkerRepository;
 import com.bim.inventory.service.WorkerService;
 import javassist.NotFoundException;
+import org.hibernate.jdbc.Work;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +29,12 @@ public class WorkerServiceImpl implements WorkerService {
     private static final Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
     @Autowired
     WorkerRepository workerRepository;
+
+    @Autowired
+    MonthlySalaryRepository monthlySalaryRepository;
+
+    @Autowired
+    MonthlySalaryPaymentRepository monthlySalaryPaymentRepository;
 
     @Override
     public Page<Worker> getAll(Pageable pageable) throws Exception {
@@ -80,43 +91,11 @@ public class WorkerServiceImpl implements WorkerService {
         if(!workerRepository.existsById(id)) {
             logger.info("Input with id " + id + " does not exists");
         }
+        List<MonthlySalaryPayment> paymentsToDelete = monthlySalaryPaymentRepository.findBymonthlySalaryId(id);
+        monthlySalaryPaymentRepository.deleteAll(paymentsToDelete);
+        monthlySalaryRepository.deleteAll(monthlySalaryRepository.findAllByWorkerId(id));
         workerRepository.deleteById(id);
     }
-
-
-    @Override
-    public WorkerDTO getbyid(Long workerId) {
-        Worker worker = workerRepository.findById(workerId)
-                .orElseThrow(() -> new IllegalArgumentException("Worker not found"));
-
-        return convertToDTO(worker);
-    }
-
-    @Override
-    public WorkerDTO convertToDTO(Worker worker) {
-        WorkerDTO workerDTO = new WorkerDTO();
-        workerDTO.setId(worker.getId());
-        workerDTO.setName(worker.getName());
-        workerDTO.setSurname(worker.getSurname());
-        workerDTO.setJobDescription(worker.getJobDescription());
-        workerDTO.setCurrentSalary(worker.getCurrentSalary());
-
-        List<SalaryDTO> salaryChangeDTOs = worker.getSalaryChanges()
-                .stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
-        workerDTO.setSalaryChanges(salaryChangeDTOs);
-
-        return workerDTO;
-    }
-
-    private SalaryDTO convertToDTO(Salary salaryChange) {
-        SalaryDTO salaryChangeDTO = new SalaryDTO();
-        salaryChangeDTO.setNewSalary(salaryChange.getNewSalary());
-        salaryChangeDTO.setChangeDate(salaryChange.getChangeDate());
-        return salaryChangeDTO;
-    }
-
 
 
 }

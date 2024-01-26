@@ -1,19 +1,15 @@
 package com.bim.inventory.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,25 +17,17 @@ import java.util.List;
 @Entity
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-public class RentStore {
+public class MonthlySalaryPayment {
 
-    @Id
+    @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long Id;
 
-    @Column(nullable = false)
-    private Long RentingAmount;
+    private Long paymentAmount;
 
     @ManyToOne
-    @JoinColumn(name = "store_id")
-    private Store store;
-
-
-    @OneToMany(mappedBy = "rentStore", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<MonthlyPayment> monthlyPayments = new ArrayList<>();
-
-    @CreatedBy
-    private String createdBy;
+    @JoinColumn(name = "monthlySalary_id")
+    private MonthlySalary monthlySalary;
 
     @CreatedDate
     private Instant createdAt;
