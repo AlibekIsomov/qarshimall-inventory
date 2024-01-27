@@ -21,7 +21,7 @@ import java.util.UUID;
 public class MonthlyPayment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     private Long paymentAmount;
 

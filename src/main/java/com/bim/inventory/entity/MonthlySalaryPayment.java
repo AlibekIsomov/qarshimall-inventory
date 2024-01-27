@@ -19,9 +19,9 @@ import java.time.Instant;
 @EntityListeners(AuditingEntityListener.class)
 public class MonthlySalaryPayment {
 
-    @javax.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     private Long paymentAmount;
 

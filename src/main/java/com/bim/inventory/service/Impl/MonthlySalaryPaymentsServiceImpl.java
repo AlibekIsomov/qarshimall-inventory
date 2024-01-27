@@ -84,8 +84,8 @@ public class MonthlySalaryPaymentsServiceImpl implements MonthlySalaryPaymentsSe
     }
 
     @Override
-    public ResponseEntity<List<MonthlySalaryPayment>> getAllPayments(Long monthlySalaryId) {
-        List<MonthlySalaryPayment> monthlyPayments = monthlySalaryPaymentRepository.findBymonthlySalaryId(monthlySalaryId);
+    public ResponseEntity<List<MonthlySalaryPayment>> getAllPayments(Long id) {
+        List<MonthlySalaryPayment> monthlyPayments = monthlySalaryPaymentRepository.findAllByMonthlySalaryId(id);
 
         return ResponseEntity.ok(monthlyPayments);
     }

@@ -23,7 +23,7 @@ import java.util.List;
 public class MonthlySalary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     private LocalDate month;
 

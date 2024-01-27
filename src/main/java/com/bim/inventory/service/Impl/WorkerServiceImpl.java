@@ -1,17 +1,13 @@
 package com.bim.inventory.service.Impl;
 
-import com.bim.inventory.dto.SalaryDTO;
 import com.bim.inventory.dto.WorkerDTO;
 import com.bim.inventory.entity.MonthlySalaryPayment;
-import com.bim.inventory.entity.RentStore;
-import com.bim.inventory.entity.Salary;
 import com.bim.inventory.entity.Worker;
 import com.bim.inventory.repository.MonthlySalaryPaymentRepository;
 import com.bim.inventory.repository.MonthlySalaryRepository;
 import com.bim.inventory.repository.WorkerRepository;
 import com.bim.inventory.service.WorkerService;
 import javassist.NotFoundException;
-import org.hibernate.jdbc.Work;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class WorkerServiceImpl implements WorkerService {
@@ -91,7 +85,7 @@ public class WorkerServiceImpl implements WorkerService {
         if(!workerRepository.existsById(id)) {
             logger.info("Input with id " + id + " does not exists");
         }
-        List<MonthlySalaryPayment> paymentsToDelete = monthlySalaryPaymentRepository.findBymonthlySalaryId(id);
+        List<MonthlySalaryPayment> paymentsToDelete = monthlySalaryPaymentRepository.findAllByMonthlySalaryId(id);
         monthlySalaryPaymentRepository.deleteAll(paymentsToDelete);
         monthlySalaryRepository.deleteAll(monthlySalaryRepository.findAllByWorkerId(id));
         workerRepository.deleteById(id);

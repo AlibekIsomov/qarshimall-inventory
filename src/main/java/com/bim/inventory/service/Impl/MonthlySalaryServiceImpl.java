@@ -100,7 +100,7 @@ public class MonthlySalaryServiceImpl implements MonthlySalaryService {
             logger.info("Store with id " + id + " does not exists");
         }
 
-        List<MonthlySalaryPayment> paymentsToDelete = monthlySalaryPaymentRepository.findBymonthlySalaryId(id);
+        List<MonthlySalaryPayment> paymentsToDelete = monthlySalaryPaymentRepository.findAllByMonthlySalaryId(id);
         monthlySalaryPaymentRepository.deleteAll(paymentsToDelete);
 
         monthlySalaryRepository.deleteById(id);

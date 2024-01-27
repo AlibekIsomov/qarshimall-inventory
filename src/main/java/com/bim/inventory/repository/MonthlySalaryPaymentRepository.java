@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface MonthlySalaryPaymentRepository extends JpaRepository<MonthlySalaryPayment, Long> {
-    List<MonthlySalaryPayment> findBymonthlySalaryId(Long monthlySalaryId);
+    List<MonthlySalaryPayment> findAllByMonthlySalaryId(Long id);
 }
