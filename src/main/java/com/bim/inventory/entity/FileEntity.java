@@ -24,4 +24,6 @@ public class FileEntity {
     @JsonIgnore
     @OneToOne
     private Inventory inventory;
+
+
 }

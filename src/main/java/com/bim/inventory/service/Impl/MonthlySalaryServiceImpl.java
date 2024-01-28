@@ -87,6 +87,7 @@ public class MonthlySalaryServiceImpl implements MonthlySalaryService {
             monthlySalary.setWorker(workerOptional.get());
 
             worker.setCurrentSalary(data.getPaymentAmount());
+            workerRepository.save(worker);
 
             return Optional.of(monthlySalary);
         } else {

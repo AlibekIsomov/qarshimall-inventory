@@ -2,6 +2,7 @@ package com.bim.inventory.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,6 +37,7 @@ public class RentStore {
 
 
     @OneToMany(mappedBy = "rentStore", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonManagedReference
     private List<MonthlyPayment> monthlyPayments = new ArrayList<>();
 
     @CreatedBy

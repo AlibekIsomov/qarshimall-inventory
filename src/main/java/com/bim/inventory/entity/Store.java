@@ -33,7 +33,8 @@ public class Store {
     @Column(nullable = false)
     private double size;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "file_entity_id")
     private FileEntity fileEntity;
 
     @ManyToOne

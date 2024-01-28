@@ -91,35 +91,36 @@ public class StoreServiceImpl implements StoreService {
 
         Store storeToUpdate = existingStore.get();
 
-        if(data.getFileEntityId() != null) {
-            storeToUpdate.setFileEntity(null);
-            storeRepository.save(storeToUpdate);
-            // Retrieve the old FileEntity
-            FileEntity oldFileEntity = storeToUpdate.getFileEntity();
+        FileEntity oldFileEntity = storeToUpdate.getFileEntity();
 
-            // If there is an old FileEntity, delete it
-            if (oldFileEntity != null) {
-                fileRepository.delete(oldFileEntity);
-            }
-
-            // Retrieve the new FileEntity
+        // Check if fileId is provided before removing the FileEntity
+        if (data.getFileEntityId() != null) {
             Optional<FileEntity> newFileEntityOptional = fileRepository.findById(data.getFileEntityId());
-            if (data.getFileEntityId() == null || !newFileEntityOptional.isPresent()) {
+
+            if (!newFileEntityOptional.isPresent()) {
                 logger.info("FileEntity with id " + data.getFileEntityId() + " does not exist");
                 return Optional.empty();
             }
 
+            // Set the new FileEntity
             FileEntity newFileEntity = newFileEntityOptional.get();
             storeToUpdate.setFileEntity(newFileEntity);
-
+        } else {
+            // If fileId is not provided, remove the old FileEntity
+            if (oldFileEntity != null) {
+                // Delete the old FileEntity from the repository
+                fileRepository.delete(oldFileEntity);
+                // Remove the old FileEntity from the Store
+                storeToUpdate.setFileEntity(null);
+            }
         }
+
         // Update the Store entity with the new data
         storeToUpdate.setFullName(data.getFullName());
         storeToUpdate.setContractNumber(data.getContractNumber());
         storeToUpdate.setSize(data.getSize());
         storeToUpdate.setStoreNumber(data.getStoreNumber());
         storeToUpdate.setCategoryStore(optionalCategory.get());
-
 
         return Optional.of(storeRepository.save(storeToUpdate));
     }
