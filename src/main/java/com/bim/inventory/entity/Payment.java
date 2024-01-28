@@ -1,6 +1,8 @@
 package com.bim.inventory.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +26,8 @@ public class Payment {
     private Long newPayment;
 
     @ManyToOne
-    @JoinColumn(name = "saleStore_id")
+    @JoinColumn(name = "sale_store_id")
+    @JsonBackReference
     private SaleStore saleStore;
 
     @CreatedBy
