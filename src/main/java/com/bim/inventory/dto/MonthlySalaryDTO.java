@@ -18,7 +18,7 @@ public class MonthlySalaryDTO {
 
     private Long id;
 
-    private LocalDate month;
+    private Instant month;
 
     private String status;
 
@@ -38,7 +38,7 @@ public class MonthlySalaryDTO {
 
 
 
-        this.month = LocalDate.now().withDayOfMonth(1);
+        this.month = Instant.from(LocalDate.now().withDayOfMonth(1));
 
         this.status = "PROCESS";
         this.paymentAmount = worker.getCurrentSalary();
