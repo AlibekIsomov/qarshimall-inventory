@@ -2,6 +2,7 @@ package com.bim.inventory.entity;
 
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,6 +36,7 @@ public class MonthlySalary {
 
     @ManyToOne
     @JoinColumn(name = "worker_id")
+    @JsonBackReference
     private Worker worker;
 
     @OneToMany(mappedBy = "monthlySalary", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)

@@ -37,10 +37,13 @@ public class MonthlySalaryServiceImpl implements MonthlySalaryService {
 
         Optional<Worker> workerOptional = workerRepository.findById(data.getWorkerId());
 
-        if (workerOptional.isPresent()) {
+            if (workerOptional.isPresent()) {
             Worker worker = workerOptional.get();
-
-
+            worker.setCurrentSalary(data.getPaymentAmount());
+            workerRepository.save(worker);
+        } else {
+                logger.info("Such ID worker does not exist!");
+            }
 
             MonthlySalary monthlySalary = new MonthlySalary();
 
@@ -50,13 +53,11 @@ public class MonthlySalaryServiceImpl implements MonthlySalaryService {
             monthlySalary.setPaidAmount(data.getPaidAmount());
             monthlySalary.setWorker(workerOptional.get());
 
-            worker.setCurrentSalary(data.getPaymentAmount());
 
-            return Optional.of(monthlySalary);
-        } else {
-            return Optional.empty();
-        }
-        }
+
+        return Optional.of(monthlySalaryRepository.save(monthlySalary));
+
+    }
 
 
 
@@ -73,6 +74,11 @@ public class MonthlySalaryServiceImpl implements MonthlySalaryService {
 
         if (workerOptional.isPresent()) {
             Worker worker = workerOptional.get();
+            worker.setCurrentSalary(data.getPaymentAmount());
+            workerRepository.save(worker);
+        } else {
+            logger.info("Such ID worker does not exist!");
+        }
 
 
 
@@ -84,13 +90,8 @@ public class MonthlySalaryServiceImpl implements MonthlySalaryService {
             monthlySalary.setPaidAmount(data.getPaidAmount());
             monthlySalary.setWorker(workerOptional.get());
 
-            worker.setCurrentSalary(data.getPaymentAmount());
-            workerRepository.save(worker);
+        return Optional.of(monthlySalaryRepository.save(monthlySalary));
 
-            return Optional.of(monthlySalary);
-        } else {
-            return Optional.empty();
-        }
     }
 
     @Override
@@ -128,15 +129,5 @@ public class MonthlySalaryServiceImpl implements MonthlySalaryService {
     }
 
 
-    private MonthlySalaryDTO convertToPaymentDTO(MonthlySalary monthlySalary) {
-        MonthlySalaryDTO monthlySalaryDTO = new MonthlySalaryDTO();
-        monthlySalaryDTO.setId(monthlySalary.getId());
-        monthlySalaryDTO.setMonth(monthlySalary.getMonth());
-        monthlySalaryDTO.setStatus(monthlySalaryDTO.getStatus());
-        monthlySalaryDTO.setPaymentAmount(monthlySalaryDTO.getPaymentAmount());
-        monthlySalaryDTO.setPaidAmount(monthlySalary.getPaidAmount());
-        monthlySalaryDTO.setCreatedAt(monthlySalaryDTO.getCreatedAt());
-        return monthlySalaryDTO;
 
-    }
 }
