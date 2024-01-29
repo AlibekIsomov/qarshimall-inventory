@@ -34,7 +34,7 @@ public class MonthlySalary {
     private Long paidAmount;
 
     @ManyToOne
-    @JoinColumn(name = "store_id")
+    @JoinColumn(name = "worker_id")
     private Worker worker;
 
     @OneToMany(mappedBy = "monthlySalary", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)

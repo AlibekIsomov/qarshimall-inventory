@@ -2,10 +2,7 @@ package com.bim.inventory.service.Impl;
 
 
 import com.bim.inventory.dto.MonthlySalaryDTO;
-import com.bim.inventory.entity.MonthlySalary;
-import com.bim.inventory.entity.MonthlySalaryPayment;
-import com.bim.inventory.entity.PaymentStatus;
-import com.bim.inventory.entity.Worker;
+import com.bim.inventory.entity.*;
 import com.bim.inventory.repository.MonthlySalaryPaymentRepository;
 import com.bim.inventory.repository.MonthlySalaryRepository;
 import com.bim.inventory.repository.WorkerRepository;
@@ -17,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -112,6 +110,12 @@ public class MonthlySalaryServiceImpl implements MonthlySalaryService {
         return monthlySalaryRepository.findAll(pageable);
     }
 
+    public List<MonthlySalary> getMonthlySalariesByWorkerId(Long workerId) {
+        Worker worker = workerRepository.findById(workerId)
+                .orElseThrow(() -> new EntityNotFoundException("Worker not found with id: " + workerId));
+
+        return monthlySalaryRepository.findByWorkerId(worker.getId());
+    }
 
 
     @Override
@@ -121,5 +125,18 @@ public class MonthlySalaryServiceImpl implements MonthlySalaryService {
             return Optional.empty();
         }
         return monthlySalaryRepository.findById(id);
+    }
+
+
+    private MonthlySalaryDTO convertToPaymentDTO(MonthlySalary monthlySalary) {
+        MonthlySalaryDTO monthlySalaryDTO = new MonthlySalaryDTO();
+        monthlySalaryDTO.setId(monthlySalary.getId());
+        monthlySalaryDTO.setMonth(monthlySalary.getMonth());
+        monthlySalaryDTO.setStatus(monthlySalaryDTO.getStatus());
+        monthlySalaryDTO.setPaymentAmount(monthlySalaryDTO.getPaymentAmount());
+        monthlySalaryDTO.setPaidAmount(monthlySalary.getPaidAmount());
+        monthlySalaryDTO.setCreatedAt(monthlySalaryDTO.getCreatedAt());
+        return monthlySalaryDTO;
+
     }
 }

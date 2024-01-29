@@ -37,8 +37,9 @@ public class Worker {
 
     private Long currentSalary;
 
-    @OneToMany(mappedBy = "worker", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<MonthlySalary> monthlySalaries = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "monthly_salaries_id")
+    private MonthlySalary monthlySalaries ;
 
     @CreatedBy
     private String createdBy;

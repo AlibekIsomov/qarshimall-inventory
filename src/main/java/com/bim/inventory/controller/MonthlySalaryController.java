@@ -2,9 +2,11 @@ package com.bim.inventory.controller;
 
 
 import com.bim.inventory.dto.MonthlySalaryDTO;
+import com.bim.inventory.dto.PaymentDTO;
 import com.bim.inventory.dto.RentStoreDTO;
 import com.bim.inventory.entity.MonthlySalary;
 import com.bim.inventory.entity.RentStore;
+import com.bim.inventory.entity.Worker;
 import com.bim.inventory.repository.MonthlySalaryRepository;
 import com.bim.inventory.service.MonthlySalaryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/monthlySalary")
+@RequestMapping("/api/monthlySalary")
 public class MonthlySalaryController {
     @Autowired
     MonthlySalaryService monthlySalaryService;
@@ -72,5 +75,15 @@ public class MonthlySalaryController {
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         monthlySalaryService.deleteById(id);
+    }
+
+//    @GetMapping("/{workerId}/payments")
+//    public ResponseEntity<List<MonthlySalaryDTO>> getAllWorker(@PathVariable Long workerId) {
+//        return monthlySalaryService.getAllWorker(workerId);
+//    }
+
+    @GetMapping("/worker/{workerId}")
+    public List<MonthlySalary> getMonthlySalariesByWorkerId(@PathVariable Long workerId) {
+        return monthlySalaryService.getMonthlySalariesByWorkerId(workerId);
     }
 }

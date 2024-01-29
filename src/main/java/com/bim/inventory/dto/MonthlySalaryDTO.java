@@ -8,12 +8,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.jdbc.Work;
 
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class MonthlySalaryDTO {
+
+    private Long id;
 
     private LocalDate month;
 
@@ -25,17 +28,23 @@ public class MonthlySalaryDTO {
 
     private Long workerId;
 
+    private Instant createdAt;
+
+
     @JsonIgnore
     private Worker worker;
 
     public void setPropertiesForFirstDay() {
-        // Set the month to the first day of the current month
+
+
+
         this.month = LocalDate.now().withDayOfMonth(1);
 
         this.status = "PROCESS";
         this.paymentAmount = worker.getCurrentSalary();
         this.paidAmount = 0L;
     }
+
 
 
 }

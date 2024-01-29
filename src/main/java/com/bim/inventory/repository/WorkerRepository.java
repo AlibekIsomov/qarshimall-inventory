@@ -10,4 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface WorkerRepository extends JpaRepository<Worker, Long> {
 
     Page<Worker> findAllByNameAndSurnameContains(String name, String Surname, Pageable pageable);
+
+
 }
