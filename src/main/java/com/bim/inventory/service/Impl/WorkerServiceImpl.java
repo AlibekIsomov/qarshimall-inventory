@@ -1,8 +1,10 @@
 package com.bim.inventory.service.Impl;
 
 import com.bim.inventory.dto.WorkerDTO;
+import com.bim.inventory.entity.FileEntity;
 import com.bim.inventory.entity.MonthlySalaryPayment;
 import com.bim.inventory.entity.Worker;
+import com.bim.inventory.repository.FileRepository;
 import com.bim.inventory.repository.MonthlySalaryPaymentRepository;
 import com.bim.inventory.repository.MonthlySalaryRepository;
 import com.bim.inventory.repository.WorkerRepository;
@@ -29,6 +31,9 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Autowired
     MonthlySalaryPaymentRepository monthlySalaryPaymentRepository;
+
+    @Autowired
+    FileRepository fileRepository;
 
     @Override
     public Page<Worker> getAll(Pageable pageable) throws Exception {
@@ -61,7 +66,32 @@ public class WorkerServiceImpl implements WorkerService {
         Optional<Worker> optionalWorker = workerRepository.findById(id);
 
         if (optionalWorker.isPresent()) {
-            Worker worker = optionalWorker.get();
+        Worker worker = optionalWorker.get();
+
+            FileEntity oldFileEntity = worker.getFileEntity();
+        // Check if fileId is provided before removing the FileEntity
+        if (data.getFileEntityId() != null) {
+            Optional<FileEntity> newFileEntityOptional = fileRepository.findById(data.getFileEntityId());
+
+            if (!newFileEntityOptional.isPresent()) {
+                logger.info("FileEntity with id " + data.getFileEntityId() + " does not exist");
+                return Optional.empty();
+            }
+
+            // Set the new FileEntity
+            FileEntity newFileEntity = newFileEntityOptional.get();
+            worker.setFileEntity(newFileEntity);
+        } else {
+            // If fileId is not provided, remove the old FileEntity
+            if (oldFileEntity != null) {
+                // Delete the old FileEntity from the repository
+                fileRepository.delete(oldFileEntity);
+                // Remove the old FileEntity from the Store
+                worker.setFileEntity(null);
+            }
+        }
+
+
 
             // Update the worker's name and surname based on the data from WorkerDTO
             worker.setName(data.getName());

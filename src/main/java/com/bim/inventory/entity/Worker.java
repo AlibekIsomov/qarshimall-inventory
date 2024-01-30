@@ -40,6 +40,10 @@ public class Worker {
     @OneToMany(mappedBy = "worker", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<MonthlySalary> monthlySalaries = new ArrayList<>();
 
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "file_entity_id")
+    private FileEntity fileEntity;
+
     @CreatedBy
     private String createdBy;
 
