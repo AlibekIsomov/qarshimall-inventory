@@ -21,7 +21,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/monthlySalaryPayemnt")
+@RequestMapping("/api/monthlySalaryPayment")
 public class  MonthlySalaryPaymentController {
 
     @Autowired
