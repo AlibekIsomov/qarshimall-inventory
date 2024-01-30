@@ -3,6 +3,7 @@ package com.bim.inventory.controller;
 
 import com.bim.inventory.dto.MonthlySalaryDTO;
 import com.bim.inventory.dto.MonthlySalaryPaymentDTO;
+import com.bim.inventory.dto.PaymentDTO;
 import com.bim.inventory.entity.MonthlySalary;
 import com.bim.inventory.entity.MonthlySalaryPayment;
 import com.bim.inventory.repository.MonthlySalaryPaymentRepository;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -62,5 +64,9 @@ public class  MonthlySalaryPaymentController {
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         monthlySalaryPaymentsSevice.deletePayment(id);
+    }
+    @GetMapping("/get/{monthlySalaryId}")
+    public List<MonthlySalaryPayment> getMonthlySalariesByMonthlySalaryId(@PathVariable Long monthlySalaryId) {
+        return monthlySalaryPaymentsSevice.getMonthlySalariesByMonthlySalaryId(monthlySalaryId);
     }
 }

@@ -1,6 +1,7 @@
 package com.bim.inventory.service;
 
 import com.bim.inventory.dto.MonthlySalaryPaymentDTO;
+import com.bim.inventory.entity.MonthlySalary;
 import com.bim.inventory.entity.MonthlySalaryPayment;
 import org.springframework.http.ResponseEntity;
 
@@ -14,5 +15,6 @@ public interface MonthlySalaryPaymentsSevice {
 
     void deletePayment(Long monthlySalaryPaymentsId);
 
-    ResponseEntity<List<MonthlySalaryPayment>> getAllPayments(Long monthlySalaryId);
+
+    List<MonthlySalaryPayment> getMonthlySalariesByMonthlySalaryId(Long monthlySalaryId);
 }

@@ -14,5 +14,5 @@ public interface MonthlySalaryPaymentRepository extends JpaRepository<MonthlySal
     List<MonthlySalaryPayment> findAllByMonthlySalaryId(Long id);
 
 
-
+    List<MonthlySalaryPayment> findByMonthlySalaryId(Long id);
 }

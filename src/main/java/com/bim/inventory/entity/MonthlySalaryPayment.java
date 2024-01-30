@@ -1,6 +1,7 @@
 package com.bim.inventory.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class MonthlySalaryPayment {
 
     @ManyToOne
     @JoinColumn(name = "monthlySalary_id")
+    @JsonBackReference
     private MonthlySalary monthlySalary;
 
     @CreatedDate

@@ -9,9 +9,9 @@ import com.bim.inventory.service.MonthlySalaryPaymentsSevice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,9 +84,10 @@ public class MonthlySalaryPaymentsServiceImpl implements MonthlySalaryPaymentsSe
     }
 
     @Override
-    public ResponseEntity<List<MonthlySalaryPayment>> getAllPayments(Long id) {
-        List<MonthlySalaryPayment> monthlyPayments = monthlySalaryPaymentRepository.findAllByMonthlySalaryId(id);
+    public List<MonthlySalaryPayment> getMonthlySalariesByMonthlySalaryId(Long monthlySalaryId) {
+        MonthlySalary monthlySalary = monthlySalaryRepository.findById(monthlySalaryId)
+                .orElseThrow(() -> new EntityNotFoundException("Worker not found with id: " + monthlySalaryId));
 
-        return ResponseEntity.ok(monthlyPayments);
+        return monthlySalaryPaymentRepository.findByMonthlySalaryId(monthlySalary.getId());
     }
 }

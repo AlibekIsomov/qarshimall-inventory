@@ -3,6 +3,7 @@ package com.bim.inventory.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,6 +41,8 @@ public class MonthlySalary {
     private Worker worker;
 
     @OneToMany(mappedBy = "monthlySalary", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonBackReference
+    @JsonIgnore
     private List<MonthlySalaryPayment> monthlySalaryPayments = new ArrayList<>();
 
     @CreatedDate
