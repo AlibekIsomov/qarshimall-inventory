@@ -1,9 +1,8 @@
 package com.bim.inventory.service.Impl;
 
+import com.bim.inventory.dto.MonthlySalaryDTO;
 import com.bim.inventory.dto.WorkerDTO;
-import com.bim.inventory.entity.FileEntity;
-import com.bim.inventory.entity.MonthlySalaryPayment;
-import com.bim.inventory.entity.Worker;
+import com.bim.inventory.entity.*;
 import com.bim.inventory.repository.FileRepository;
 import com.bim.inventory.repository.MonthlySalaryPaymentRepository;
 import com.bim.inventory.repository.MonthlySalaryRepository;
@@ -17,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +38,10 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public Page<Worker> getAll(Pageable pageable) throws Exception {
         return workerRepository.findAll(pageable);
+    }
+
+    public List<Worker> getAllWorker()  {
+        return workerRepository.findAll();
     }
 
     @Override
@@ -120,6 +124,35 @@ public class WorkerServiceImpl implements WorkerService {
         monthlySalaryRepository.deleteAll(monthlySalaryRepository.findAllByWorkerId(id));
         workerRepository.deleteById(id);
     }
+    @Override
+    @Transactional
+    public Optional<MonthlySalary> createForSchedule(MonthlySalaryDTO data) throws Exception {
+
+        List<Worker> allWorkers = workerRepository.findAll();
+
+        for (Worker worker : allWorkers) {
+
+            worker.setCurrentSalary(data.getPaymentAmount());
+            workerRepository.save(worker);
 
 
-}
+            MonthlySalary monthlySalary = new MonthlySalary();
+
+            data.setPropertiesForFirstDay();
+            monthlySalary.setMonth(data.getMonth());
+            monthlySalary.setStatus(PaymentStatus.valueOf(data.getStatus()));
+            monthlySalary.setPaymentAmount(data.getPaymentAmount());
+            monthlySalary.setPaidAmount(data.getPaidAmount());
+            monthlySalary.setWorker(worker);
+
+
+            return Optional.of(monthlySalaryRepository.save(monthlySalary));
+        }
+            return Optional.empty();
+    }
+        }
+
+
+
+
+

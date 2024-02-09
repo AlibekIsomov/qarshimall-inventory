@@ -44,9 +44,6 @@ public class Worker {
     @JoinColumn(name = "file_entity_id")
     private FileEntity fileEntity;
 
-    @CreatedBy
-    private String createdBy;
-
     @CreatedDate
     private Instant createdAt;
 }

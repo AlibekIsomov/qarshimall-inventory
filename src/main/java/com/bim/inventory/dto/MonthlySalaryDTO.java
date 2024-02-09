@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.jdbc.Work;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 
 @Data
 @AllArgsConstructor
@@ -35,13 +35,24 @@ public class MonthlySalaryDTO {
     private Worker worker;
 
     public void setPropertiesForFirstDay() {
+        System.out.println("Setting properties for the first day of the month...");
 
-
-
-        this.month = Instant.from(LocalDate.now().withDayOfMonth(1));
-
+        // Use LocalDate.atStartOfDay(ZoneOffset.UTC) to obtain an Instant at the start of the day
+        this.month = LocalDate.now().withDayOfMonth(1).atStartOfDay(ZoneOffset.UTC).toInstant();
         this.status = "PROCESS";
-        this.paymentAmount = worker.getCurrentSalary();
+
+        if (worker != null) {
+            if (worker.getCurrentSalary() != null) {
+                this.paymentAmount = worker.getCurrentSalary();
+            } else {
+                this.paymentAmount = 10000L;
+            }
+        } else {
+            // Handle the case where worker is null (assign a default value or throw an exception)
+            // For now, let's assign a default value of 10000L
+            this.paymentAmount = 10000L;
+        }
+
         this.paidAmount = 0L;
     }
 
