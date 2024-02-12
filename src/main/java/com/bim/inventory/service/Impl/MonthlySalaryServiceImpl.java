@@ -47,7 +47,7 @@ public class MonthlySalaryServiceImpl implements MonthlySalaryService {
 
             MonthlySalary monthlySalary = new MonthlySalary();
 
-            monthlySalary.setMonth(data.getMonth());
+            monthlySalary.setMonthDate(data.getMonthDate());
             monthlySalary.setStatus(PaymentStatus.valueOf(data.getStatus()));
             monthlySalary.setPaymentAmount(data.getPaymentAmount());
             monthlySalary.setPaidAmount(data.getPaidAmount());
@@ -83,7 +83,7 @@ public class MonthlySalaryServiceImpl implements MonthlySalaryService {
 
             MonthlySalary monthlySalary = optionalMonthlySalary.get();
 
-            monthlySalary.setMonth(data.getMonth());
+            monthlySalary.setMonthDate(data.getMonthDate());
             monthlySalary.setStatus(PaymentStatus.valueOf(data.getStatus()));
             monthlySalary.setPaymentAmount(data.getPaymentAmount());
             monthlySalary.setPaidAmount(data.getPaidAmount());

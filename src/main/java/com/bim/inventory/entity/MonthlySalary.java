@@ -27,7 +27,7 @@ public class MonthlySalary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Instant month;
+    private Instant monthDate;
 
     private PaymentStatus status;
 

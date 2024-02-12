@@ -27,12 +27,12 @@ public class SaleStore {
     private Long id;
 
     @Column(nullable = false)
-    private int fullAmount;
+    private Long fullAmount;
 
     @Column(name = "initialPayment")
-    private int initialPayment;
+    private Long initialPayment;
 
-    private double lastPayment;
+    private Long lastPayment;
 
 
     @ManyToOne

@@ -139,7 +139,7 @@ public class WorkerServiceImpl implements WorkerService {
             MonthlySalary monthlySalary = new MonthlySalary();
 
             data.setPropertiesForFirstDay();
-            monthlySalary.setMonth(data.getMonth());
+            monthlySalary.setMonthDate(data.getMonthDate());
             monthlySalary.setStatus(PaymentStatus.valueOf(data.getStatus()));
             monthlySalary.setPaymentAmount(data.getPaymentAmount());
             monthlySalary.setPaidAmount(data.getPaidAmount());

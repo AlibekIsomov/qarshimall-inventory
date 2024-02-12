@@ -18,7 +18,7 @@ public class MonthlySalaryDTO {
 
     private Long id;
 
-    private Instant month;
+    private Instant monthDate;
 
     private String status;
 
@@ -38,7 +38,7 @@ public class MonthlySalaryDTO {
         System.out.println("Setting properties for the first day of the month...");
 
         // Use LocalDate.atStartOfDay(ZoneOffset.UTC) to obtain an Instant at the start of the day
-        this.month = LocalDate.now().withDayOfMonth(1).atStartOfDay(ZoneOffset.UTC).toInstant();
+        this.monthDate = LocalDate.now().withDayOfMonth(1).atStartOfDay(ZoneOffset.UTC).toInstant();
         this.status = "PROCESS";
 
         if (worker != null) {

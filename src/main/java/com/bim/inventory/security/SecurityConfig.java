@@ -84,9 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/api/fayl/upload").hasAnyAuthority("ADMIN","MANAGER")
 //
 //
-                .antMatchers("/swagger-ui/**").permitAll()
-                .antMatchers("/swagger-ui.html").permitAll()
-                .antMatchers("/swagger-ui/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/swagger-resources/**").permitAll()
+                .antMatchers("/swagger-ui/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/swagger-resources/**").hasAnyAuthority("ADMIN")
 //
 //                .antMatchers("/api/user").hasAnyAuthority("ADMIN")
 //                .antMatchers("/api/user/{id}").hasAnyAuthority("ADMIN")
@@ -94,7 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/api/user/get/{id}").hasAnyAuthority("ADMIN")
 //                .antMatchers("/api/user/search/{key}").hasAnyAuthority("ADMIN")
 
-                .antMatchers("/**").permitAll()
+                .antMatchers("/**").hasAnyAuthority("ADMIN")
 
                 .anyRequest().authenticated()
                 .and().exceptionHandling()

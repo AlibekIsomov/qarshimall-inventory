@@ -14,7 +14,7 @@ import java.util.List;
 public class SaleStoreDTO {
     private Long id;
 
-    private int fullAmount;
+    private Long fullAmount;
 
     private int contractNumber;
 
@@ -22,11 +22,11 @@ public class SaleStoreDTO {
 
     private int storeNumber;
 
-    private int initialPayment;
+    private Long initialPayment;
 
     private double size;
 
-    private double lastPayment;
+    private Long lastPayment;
 
     private Long StoreId;
 
