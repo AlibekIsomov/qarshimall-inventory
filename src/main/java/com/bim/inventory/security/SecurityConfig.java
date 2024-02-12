@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
 
-//                .antMatchers("/api/account/authenticate").permitAll()
+                .antMatchers("/api/account/authenticate").permitAll()
 //
 //                .antMatchers("/api/category").hasAnyAuthority("ADMIN","MANAGER")
 //                .antMatchers("/api/category/{id}").hasAnyAuthority("ADMIN","MANAGER")
@@ -84,7 +84,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/api/fayl/upload").hasAnyAuthority("ADMIN","MANAGER")
 //
 //
-                .antMatchers("/swagger-ui/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/swagger-resources/**").hasAnyAuthority("ADMIN")
 //
 //                .antMatchers("/api/user").hasAnyAuthority("ADMIN")
 //                .antMatchers("/api/user/{id}").hasAnyAuthority("ADMIN")
@@ -92,7 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/api/user/get/{id}").hasAnyAuthority("ADMIN")
 //                .antMatchers("/api/user/search/{key}").hasAnyAuthority("ADMIN")
 
-                .antMatchers("/**").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/**").hasAnyAuthority("ADMIN")
 
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
