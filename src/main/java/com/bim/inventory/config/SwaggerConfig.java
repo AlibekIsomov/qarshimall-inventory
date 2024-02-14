@@ -44,6 +44,6 @@ public class SwaggerConfig implements WebMvcConfigurer {
     //for Swagger api doc generation
     //http://localhost:8086/v2/api-docs
 
-//    http://localhost:8086/swagger-ui/index.html
+//    http://localhost:8080/swagger-ui/index.html
 
 
