@@ -16,15 +16,7 @@ public class SaleStoreDTO {
 
     private Long fullAmount;
 
-    private int contractNumber;
-
-    private String fullName;
-
-    private int storeNumber;
-
     private Long initialPayment;
-
-    private double size;
 
     private Long lastPayment;
 
