@@ -32,6 +32,7 @@ public class SaleStore {
     @Column(name = "initialPayment")
     private Long initialPayment;
 
+    @Column(nullable = true)
     private Long lastPayment;
 
 
@@ -40,6 +41,7 @@ public class SaleStore {
     private Store store;
 
 
+    @JsonIgnore
     @OneToMany(mappedBy = "saleStore", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonManagedReference
     private List<Payment> payments = new ArrayList<>();
