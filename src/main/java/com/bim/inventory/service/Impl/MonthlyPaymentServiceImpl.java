@@ -64,6 +64,8 @@ public class MonthlyPaymentServiceImpl implements MonthlyPaymentService {
         monthlyPayment.setPaymentAmount(data.getPaymentAmount());
         monthlyPayment.setStatus(paymentStatus);
         monthlyPayment.setPaidAmount(data.getPaidAmount());
+        monthlyPayment.setToDate(data.getToDate());
+        monthlyPayment.setFromDate(data.getFromDate());
 
 
 
