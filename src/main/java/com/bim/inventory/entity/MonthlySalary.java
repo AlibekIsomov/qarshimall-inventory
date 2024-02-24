@@ -27,10 +27,12 @@ public class MonthlySalary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private Instant monthDate;
 
     private PaymentStatus status;
 
+    @Column(nullable = false)
     private Long paymentAmount;
 
     private Long paidAmount;

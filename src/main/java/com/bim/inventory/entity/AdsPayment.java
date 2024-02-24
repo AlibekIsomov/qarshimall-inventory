@@ -30,7 +30,6 @@ public class AdsPayment {
     @Column(nullable = false)
     private Long paymentAmount;
 
-    @Column(nullable = false)
     private Long paidAmount;
 
     @Column(nullable = false)
@@ -46,7 +45,6 @@ public class AdsPayment {
     @JoinColumn(name = "adsItem_id")
     @JsonBackReference
     private AdsItem adsItem;
-
 
     private PaymentStatus status;
 

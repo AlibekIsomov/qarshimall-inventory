@@ -24,12 +24,15 @@ public class MonthlyPayment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private Long paymentAmount;
 
     private Long paidAmount;
 
+    @Column(nullable = false)
     private Date toDate;
 
+    @Column(nullable = false)
     private Date fromDate;
 
     @ManyToOne
