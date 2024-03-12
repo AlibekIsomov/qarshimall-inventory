@@ -66,7 +66,7 @@ public class AdsPaymentController {
         return adsPaymentService.getAllPayments(adsItemId);
     }
 
-    @DeleteMapping("/{paymentId}")
+    @DeleteMapping("/{adsPaymentId}")
     public ResponseEntity<String> deletePayment(@PathVariable Long adsPaymentId) {
         try {
             adsPaymentService.deletePayment(adsPaymentId);

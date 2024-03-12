@@ -98,10 +98,11 @@ public class SaleStoreServiceImpl implements SaleStoreService {
 
     @Override
     public void deleteById(Long id) {
-        if(!storeRepository.existsById(id)) {
+        if(!saleStoreRepository.existsById(id)) {
             logger.info("Store with id " + id + " does not exists");
         }
-        storeRepository.deleteById(id);
+
+        saleStoreRepository.deleteById(id);
     }
 
 
