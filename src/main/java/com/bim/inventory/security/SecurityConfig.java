@@ -138,7 +138,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         config.addAllowedOrigin("http://localhost:5502");
         config.addAllowedOrigin("http://localhost:5173");
         config.addAllowedOrigin("https://dashboard.qarshimall.uz");
-        config.addAllowedOrigin("http://139.59.154.62");
+        config.addAllowedOrigin("https://api.qarshimall.uz");
+        config.addAllowedOrigin("http://185.250.44.186");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
